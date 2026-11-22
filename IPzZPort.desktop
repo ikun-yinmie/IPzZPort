@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IPzZPort
+Name[zh_CN]=IPzZPort 服务控制台
+Comment=启动、停止、重启和查看端口转发服务状态
+Exec=python3 "/path/to/IPzZPort/launch.py"
+Path=/path/to/IPzZPort
+Icon=/path/to/IPzZPort/ipzzport.svg
+Terminal=false
+Categories=Network;
+StartupNotify=false
+Actions=Stop;
+
+[Desktop Action Stop]
+Name=停止面板与转发
+Exec=python3 "/path/to/IPzZPort/launch.py" --stop

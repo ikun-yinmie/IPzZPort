@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="purple">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100c1c">
+  <meta name="color-scheme" content="dark">
+  <title>IPzZPort · 转发面板</title>
+  <script src="/panel.js"></script>
+  <link rel="stylesheet" href="/panel.css">
+</head>
+<body>
+  <header class="top"><div class="shell top-inner">
+    <div class="brand"><span class="mark" aria-hidden="true">⇄</span><span>IPzZ<span class="brand-accent">Port</span><small>NETWORK CONTROL</small></span></div>
+    <div class="top-controls">
+      <span class="local"><span class="dot" aria-hidden="true"></span> 本机管理面板 <span class="local-code" aria-hidden="true">/ LOCAL</span></span>
+      <label class="theme-picker" for="panel-theme">主题
+        <select id="panel-theme">
+          <option value="light">浅色</option>
+          <option value="dark">深色</option>
+          <option value="purple" selected>紫色</option>
+        </select>
+      </label>
+    </div>
+  </div></header>
+  <main class="shell">
+    <section class="intro" aria-labelledby="title">
+      <div><p class="eyebrow">NETWORK BRIDGE <span>/ 01</span></p><h1 id="title">跨越协议，<span>连接两端。</span></h1><p class="intro-copy">IPv4 ⇄ IPv6 · TCP 端口转发控制台</p></div>
+      <button type="button" id="new-rule" class="primary"><span aria-hidden="true">＋</span> 新增规则</button>
+    </section>
+    <dl class="stats">
+      <div class="stat-total"><dt><span>规则总数</span><span class="stat-code" aria-hidden="true">01 / RULES</span></dt><dd id="total">—</dd><span class="stat-track" aria-hidden="true"></span></div>
+      <div class="stat-running"><dt><span>正在监听</span><span class="stat-code" aria-hidden="true">02 / LISTENERS</span></dt><dd id="running">—</dd><span class="stat-track" aria-hidden="true"></span></div>
+      <div class="stat-connections"><dt><span>活动连接</span><span class="stat-code" aria-hidden="true">03 / CONNECTIONS</span></dt><dd id="connections">—</dd><span class="stat-track" aria-hidden="true"></span></div>
+    </dl>
+    <section class="card" aria-labelledby="rules-title">
+      <div class="card-header"><div class="section-title"><span class="section-icon" aria-hidden="true">⌘</span><h2 id="rules-title">转发规则</h2><span class="section-code" aria-hidden="true">ROUTING TABLE</span></div><button type="button" id="refresh"><span aria-hidden="true">↻</span> 刷新状态</button></div>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <div class="empty-wrap" id="empty-view"><div class="empty-glyph" aria-hidden="true"><span>IPv6</span><b>⇄</b><span>IPv4</span></div><p id="empty" class="empty">正在读取规则…</p><p class="empty-caption">从一个入口，连向另一个地址。</p></div>
+      <div class="table-wrap" id="rules-view" hidden>
+        <table><thead><tr><th scope="col">规则名称</th><th scope="col">监听入口</th><th scope="col">转发目标</th><th scope="col">状态</th><th scope="col">操作</th></tr></thead><tbody id="rules"></tbody></table>
+      </div>
+      <div class="card-footer"><span>TCP / IPv4 ⇄ IPv6</span><span>状态按需刷新</span></div>
+    </section>
+    <aside class="example">
+      <div class="example-copy"><span class="example-icon" aria-hidden="true">↗</span><div><p class="eyebrow">QUICK START</p><h2>让外网 IPv6 访问 OneNav</h2><p>保留 IPv4 服务，转发 <code>[::]:9632 → 127.0.0.1:9632</code>。此示例监听所有本机 IPv6 地址，允许外部网络连接；外网访问还需放行对应端口。</p></div></div>
+      <button type="button" id="example">填入 OneNav 示例 <span aria-hidden="true">→</span></button>
+    </aside>
+    <footer class="page-footer"><span>IPzZPort <span aria-hidden="true">//</span> 本地网络桥接</span><span>FIXED TARGET · TCP FORWARDING</span></footer>
+  </main>
+  <dialog id="editor" aria-labelledby="editor-title">
+    <form id="rule-form">
+      <p class="eyebrow">ROUTE CONFIGURATION</p>
+      <h2 id="editor-title">新增规则</h2>
+      <label>规则名称<input name="name" required maxlength="64" placeholder="例如 OneNav" autocomplete="off"></label>
+      <label>监听地址<input name="listen" required maxlength="80" placeholder="[::]:9632" autocomplete="off" spellcheck="false"></label>
+      <label>目标地址<input name="target" required maxlength="80" placeholder="127.0.0.1:9632" autocomplete="off" spellcheck="false"></label>
+      <p class="hint">IPv6 地址请加方括号。<code>[::]</code> 接收本机及外部 IPv6 连接；<code>[::1]</code> 仅限本机。</p>
+      <label class="checkbox"><input name="enabled" type="checkbox" checked> 保存后启用</label>
+      <p id="form-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" id="cancel">取消</button><button type="submit" class="primary" id="save">保存规则</button></div>
+    </form>
+  </dialog>
+  <dialog id="confirm" aria-labelledby="confirm-title">
+    <form id="delete-form">
+      <p class="eyebrow">REMOVE ROUTE</p><h2 id="confirm-title">删除规则</h2><p id="delete-info"></p>
+      <div class="dialog-actions"><button type="button" id="keep">取消</button><button type="submit" class="danger" id="delete-rule">确认删除</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
